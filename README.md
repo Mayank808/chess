@@ -11,10 +11,12 @@ Please contact us to view the code. It can not be currently shown as it is again
   - [valgrindcheck.sh](https://github.com/theDe-bugger/chess/blob/main/valgrindcheck.sh) is a bash script to test all input files against a given program with the valgrind command.
   
 # High Level Overview of Logic
-* ChessBoard
+* ChessBoard:
+
 This is the main class that stores all the pieces and performs all move validations. It is the central class that the program relies on to actually process the game and determine logic. Stores pointers to players, pieces, and a scoreboard. Subject of the text observers as mentioned later on. Handles input validation to a logical extent.
 
-* Player
+* Player:
+
 There are two types of players, NPC(Levels) and Human. Human allows for commandline input and creates a Move class instance. NPC is the computer with 5 possible levels which generates a certain class/quality of moves based on which level it is in. 
 Level 1: random valid moves
 Level 2: random valid moves and captures
@@ -23,25 +25,32 @@ Level 4: checks/checkmates, weight-based captures, defense, valid moves
 Level 5: minimax algorithm to optimize moves
 
 * Pieces:
+
 Abstract Piece class for every piece on the board to inherit from. Each piece can now validate input, return possible moves that it can make on the current board, and handles specific types of moves (castling, pawn promotion and enpassant for example).
 
 * Applying Moves:
+
 The ChessBoard handles this function by checking if the current move input can be applied (does not check the current player, it is a valid move for the corresponding piece, etc). Checked this by applying to a clone of the board and if it was valid, then it allowed it, otherwise it gave an error.
 
 * Check/Checkmate and Stalemate:
+
 Created move generator functions to check the possible valid moves that each player can make at the end of a turn if the current board shows a check. If there are no possible valid moves, checks if one of the kings is in check and returns checkmate, otherwise returns stalemate.
 
 # OOP and Design Practices
 * Observer Pattern:
+
 The ChessBoard class was the subject and the obsever class was the text-based and graphic-based output to display the game.
 
 * Strategy Pattern:
+
 Used strategy pattern to create computer levels (to generate different types of moves based on a certain property).
 
 * Chain of Responsibility Pattern:
+
 Each part of the code had responsibility and passed down certain tasks to subclasses (ie; board does general move validation, pieces do specific move validation, etc).
 
-# Flawed MVC"
+# Flawed MVC:
+
 We attempted to apply Model-View-Controller pattern in the limited time, but were unsuccessful in implementing it fully. We mixed the controller and model into one by performing validations in the chessboard itself instead of strictly keeping the chessboard the model and keeping a general controller. 
 
 # Screenshots
